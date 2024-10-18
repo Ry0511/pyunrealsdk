@@ -4,7 +4,8 @@
 	branch = stable
 [submodule "libs/unrealsdk"]
 	path = libs/unrealsdk
-	url = ../../bl-sdk/unrealsdk.git
+	url = https://github.com/Ry0511/unrealsdk
+	branch = bl1sdk
 [submodule "common_cmake"]
 	path = common_cmake
 	url = ../../bl-sdk/common_cmake.git
