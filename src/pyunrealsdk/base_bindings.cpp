@@ -125,18 +125,13 @@ void create_and_add_config_dict(py::module_& mod) {
     // Instead, to get everything in Python more easily, we'll just load the config files directly
     // in Python to begin with.
 
-    // Note path was const T&& probably a typo for const T&
-    auto load_config_file = [](const std::filesystem::path& path) -> py::object {
-        try {
-            // NOTE: Avoid the stacktrace for if the file does not exist; Still indicate that it
-            //  could not be found and where we looked for it.
-            if (!std::filesystem::is_regular_file(path)) {
-                LOG(WARNING, "Config File '{}' does not exist", path.string());
-                return py::none{};
-            }
+    auto load_config_file = [](const std::filesystem::path&& path) -> py::object {
+        if (!std::filesystem::exists(path)) {
+            return py::none{};
+        }
 
+        try {
             const py::dict globals{"path"_a = path};
-            LOG(INFO, "Loading Config File: '{}'", path.wstring());
             py::exec(
                 "import tomllib\n"
                 "with path.open(\"rb\") as file:\n"
