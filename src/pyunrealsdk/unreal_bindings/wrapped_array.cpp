@@ -159,7 +159,7 @@ void register_wrapped_array(py::module_& mod) {
              "    stop: The index to stop searching before. Defaults to the end of the array.\n"
              "Returns:\n"
              "    The first index of the value in the array.",
-             "value"_a, "start"_a = 0, "stop"_a = -1)
+             "value"_a, "start"_a = 0, "stop"_a = std::numeric_limits<py::ssize_t>::max())
         .def("insert", &impl::array_py_insert,
              "Inserts an item into the array before the given index.\n"
              "\n"
@@ -189,6 +189,11 @@ void register_wrapped_array(py::module_& mod) {
              "    key: A one-arg function used to extract a comparison key.\n"
              "    reverse: If true, the list is sorted as if each comparison were reversed.",
              py::kw_only{}, "key"_a = py::none{}, "reverse"_a = false)
+        .def("_get_address", &impl::array_py_getaddress,
+             "Gets the address of this array, for debugging.\n"
+             "\n"
+             "Returns:\n"
+             "    This array's address.")
         .def_readwrite("_type", &WrappedArray::type);
 
     // Create as a class method, see pybind11#1693

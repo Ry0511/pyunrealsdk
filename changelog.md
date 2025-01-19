@@ -2,6 +2,50 @@
 
 ## Upcoming
 
+- `WrappedStruct` now supports being copied via the `copy` module.
+
+  [2ce96e52](https://github.com/bl-sdk/pyunrealsdk/commit/2ce96e52)
+
+- Fixed that `WrappedArray.index` would not check the last item in the array. It also now accepts
+  start/stop indexes beyond the array bounds, like `list.index` does.
+
+  [10bdc130](https://github.com/bl-sdk/pyunrealsdk/commit/10bdc130)
+
+- Added a `_get_address` method to `WrappedArray`, `WrappedMulticastDelegate`, and `WrappedStruct`.
+
+  [1b3e9686](https://github.com/bl-sdk/pyunrealsdk/commit/1b3e9686)
+
+## v1.5.2
+
+### unrealsdk v1.6.1
+For reference, the unrealsdk v1.6.1 changes this includes are:
+
+> - Handled `UClass::Interfaces` also having a different offset between BL2 and TPS.
+
+## v1.5.1
+- Changed type hinting of `unrealsdk.find_all` to return an `Iterable[UObject]`, instead of
+  `Iterator[UObject]`. This mirrors what was actually happening at runtime.
+
+  [fbe877ef](https://github.com/bl-sdk/pyunrealsdk/commit/fbe877ef)
+
+### unrealsdk v1.6.0
+For reference, the unrealsdk v1.6.0 changes this includes are:
+
+> - Handled `UStruct` differing in size between BL2 and TPS.
+> 
+>   This affects all members on it's subclasses - `UClass::ClassDefaultObject`, `UClass::Interfaces`,
+>   `UFunction::FunctionFlags`, `UFunction::NumParams`, `UFunction::ParamsSize`,
+>   `UFunction::ReturnValueOffset`, and `UScriptStruct::StructFlags` have all now changed to methods
+>   which return a reference.
+> 
+>   [72579c18](https://github.com/bl-sdk/unrealsdk/commit/72579c18)
+> 
+> - Fixed all BL3 console output being treated as console commands instead.
+> 
+>   [1432408f](https://github.com/bl-sdk/unrealsdk/commit/1432408f)
+
+## v1.5.0
+
 - Deprecated `unrealsdk.hooks.inject_next_call` in favour of a new
   `unrealsdk.hooks.prevent_hooking_direct_calls` context manager.
 
@@ -17,6 +61,59 @@
   The full contents of the unrealsdk config are parsed and exposed to Python in `unrealsdk.config`.
 
   [ecde0a83](https://github.com/bl-sdk/pyunrealsdk/commit/ecde0a83)
+
+- `unrealsdk.construct_object` now throws a `RuntimeError` instead of silently returning `None` when
+  constructing the object fails. This is how the type hints already assumed it worked.
+
+  [264634e2](https://github.com/bl-sdk/pyunrealsdk/commit/264634e2)
+
+### unrealsdk v1.5.0
+For reference, the unrealsdk v1.5.0 changes this includes are:
+
+> - Completely reworked the configuration system.
+> 
+>   Environment variables and the `unrealsdk.env` are no longer used, due to issues with them not fully
+>   propagating within the same process. The new configuration now uses an `unrealsdk.toml` instead.
+>   
+>   Also added support for a user specific override file - `unrealsdk.user.toml`. This allows projects
+>   to ship their own `unrealsdk.toml`, without overwriting user's settings on update.
+> 
+>   [4daecbde](https://github.com/bl-sdk/unrealsdk/commit/4daecbde)
+> 
+> - `unrealsdk::hook_manager::inject_next_call` is now thread local.
+> 
+>   [427c8734](https://github.com/bl-sdk/unrealsdk/commit/427c8734)
+> 
+> - Fixed that `unrealsdk::commands::has_command` and `unrealsdk::commands::remove_command` were case
+>   sensitive, while `unrealsdk::commands::add_command` and the callbacks were not. Commands should be
+>   now be case insensitive everywhere.
+> 
+>   [b641706d](https://github.com/bl-sdk/unrealsdk/commit/b641706d)
+> 
+> - Fixed that the executed command message of custom sdk commands would not appear in console if you
+>   increased the minimum log level, and that they may have appeared out of order with respects to
+>   native engine messages.
+> 
+>   [b652da13](https://github.com/bl-sdk/unrealsdk/commit/b652da13)
+> 
+> - Added an additional console command hook in BL2, to cover commands not run directly via console.
+> 
+>   [1200fca4](https://github.com/bl-sdk/unrealsdk/commit/1200fca4)
+> 
+> - Renamed the `unrealsdk.locking_process_event` (previously `UNREALSDK_LOCKING_PROCESS_EVENT`)
+>   setting to `unrealsdk.locking_function_calls`, and expanded it's scope to cover all function
+>   calls. This fixes a few more possibilities for lockups.
+> 
+>   [bebaeab4](https://github.com/bl-sdk/unrealsdk/commit/bebaeab4)
+> 
+> - Trying to set a struct, array, or multicast delegate to itself is now a no-op, and prints a
+>   warning.
+> 
+>   [8a98db1f](https://github.com/bl-sdk/unrealsdk/commit/8a98db1f)
+> 
+> - The console key will now also be overwritten if it was previously set to `Undefine`.
+> 
+>   [631fa41e](https://github.com/bl-sdk/unrealsdk/commit/631fa41e)
 
 ## v1.4.0
 

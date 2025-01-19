@@ -7,6 +7,24 @@ from ._uobject_children import UField, UFunction, UScriptStruct, UStruct
 class WrappedStruct:
     _type: UStruct
 
+    def __copy__(self) -> WrappedStruct:
+        """
+        Creates a copy of this struct. Don't call this directly, use copy.copy().
+
+        Returns:
+            A new, python-owned copy of this struct.
+        """
+
+    def __deepcopy__(self, memo: dict[Any, Any]) -> WrappedStruct:
+        """
+        Creates a copy of this struct. Don't call this directly, use copy.deepcopy().
+
+        Args:
+            memo: Opaque dict used by deepcopy internal
+        Returns:
+            A new, python-owned copy of this struct.
+        """
+
     def __dir__(self) -> list[str]:
         """
         Gets the attributes which exist on this struct.
@@ -53,6 +71,13 @@ class WrappedStruct:
         Args:
             name: The name of the field to set.
             value: The value to write.
+        """
+    def _get_address(self) -> int:
+        """
+        Gets the address of this struct, for debugging.
+
+        Returns:
+            This struct's address.
         """
     def _get_field(self, field: UField) -> Any:
         """

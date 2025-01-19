@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 from collections.abc import Callable, Iterator, Sequence
 from types import GenericAlias
 from typing import Any, Never, Self, overload
@@ -161,6 +162,13 @@ class WrappedArray[T]:
             range: The range to set.
             value: The values to set.
         """
+    def _get_address(self) -> int:
+        """
+        Gets the address of this array, for debugging.
+
+        Returns:
+            This array's address.
+        """
     def append(self, value: T) -> None:
         """
         Appends a value to the end of the array.
@@ -188,7 +196,7 @@ class WrappedArray[T]:
         Args:
             values: The sequence of values to append.
         """
-    def index(self, value: T, start: int = 0, stop: int = -1) -> int:
+    def index(self, value: T, start: int = 0, stop: int = sys.maxsize) -> int:
         """
         Finds the first index of the given value in the array.
 
