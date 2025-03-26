@@ -5,7 +5,7 @@
 [submodule "libs/unrealsdk"]
 	path = libs/unrealsdk
 	url = https://github.com/Ry0511/unrealsdk
-	branch = bl1sdk
+	branch = bl1sdk-cleaned
 [submodule "common_cmake"]
 	path = common_cmake
 	url = ../../bl-sdk/common_cmake.git
