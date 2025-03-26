@@ -1,5 +1,42 @@
 # Changelog
 
+## v1.7.0
+
+- Added `WrappedArray.emplace_struct`, to construct structs in place. This is more efficient than
+  calling `arr.insert(pos, unrealsdk.make_struct(...))`.
+
+  [dc515cdc](https://github.com/bl-sdk/unrealsdk/commit/dc515cdc)
+
+- Added `unrealsdk.unreal.IGNORE_STRUCT`, a sentinel value which can be assigned to any struct, but
+  which does nothing. This is most useful when a function has a required struct arg.
+
+  [6c0b58ee](https://github.com/bl-sdk/unrealsdk/commit/6c0b58ee)
+  
+- Added support for sending property changed events. This is typically best done via the
+  `unrealsdk.unreal.notify_changes` context manager.
+
+  [97e3e0c2](https://github.com/bl-sdk/unrealsdk/commit/97e3e0c2)
+
+- Fixed that it was possible for the `unrealsdk` module in the global namespace to get replaced, if
+  something during the init script messed with `sys.modules`. It is now imported during
+  initialization.
+
+  [91cfee4b](https://github.com/bl-sdk/unrealsdk/commit/91cfee4b)
+
+### unrealsdk v1.8.0
+For reference, the unrealsdk v1.8.0 changes this includes are:
+
+> - Added support for sending property changed events, via `UObject::post_edit_change_property` and
+>   `UObject::post_edit_change_chain_property`.
+>   
+>   [a6040da4](https://github.com/bl-sdk/unrealsdk/commit/a6040da4)
+> 
+> - Made the error message when assigning incompatible array types more clear.
+> 
+>   See also https://github.com/bl-sdk/unrealsdk/issues/60 .
+> 
+>   [6222756c](https://github.com/bl-sdk/unrealsdk/commit/6222756c)
+
 ## v1.6.0
 
 - `WrappedStruct` now supports being copied via the `copy` module.

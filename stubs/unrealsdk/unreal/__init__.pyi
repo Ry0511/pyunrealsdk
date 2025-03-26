@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from ._bound_function import BoundFunction
 from ._uenum import UEnum
-from ._uobject import UObject
+from ._uobject import UObject, notify_changes
 from ._uobject_children import (
     UArrayProperty,
     UBlueprintGeneratedClass,
@@ -48,9 +48,10 @@ from ._uobject_children import (
 from ._weak_pointer import WeakPointer
 from ._wrapped_array import WrappedArray
 from ._wrapped_multicast_delegate import WrappedMulticastDelegate
-from ._wrapped_struct import WrappedStruct
+from ._wrapped_struct import IGNORE_STRUCT, WrappedStruct
 
 __all__: tuple[str, ...] = (
+    "IGNORE_STRUCT",
     "BoundFunction",
     "UArrayProperty",
     "UBlueprintGeneratedClass",
@@ -97,6 +98,7 @@ __all__: tuple[str, ...] = (
     "WrappedMulticastDelegate",
     "WrappedStruct",
     "dir_includes_unreal",
+    "notify_changes",
 )
 
 def dir_includes_unreal(should_include: bool) -> None:

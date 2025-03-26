@@ -1,6 +1,7 @@
 .idea
 .vs
 .vscode
+.idea
 
 # C/C++ excludes
 .cache/clangd
